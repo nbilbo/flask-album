@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head lang="pt-br">
-  <meta property='og:title' content="Nbilbo">
+  <meta property='og:title' content="{{ config.APP_NAME }}">
   <meta property='og:description' content="Confira minha galeria online">
   <meta property='og:image' content="{{ url_for(endpoint='static', filename='image/og_image.png') }}">
 
@@ -143,13 +143,13 @@
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
       <div class="col-md-4 d-flex align-items-center">                                                                                             
-        <a href="https://github.com/nbilbo" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" target="_blank"><svg class="bi" width="30" height="24"><use xlink:href="#hammer"/></svg></a>
-        <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 https://github.com/nbilbo</span>
+	<a href="{{ config.COPYRIGHT_URL }}" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" target="_blank"><svg class="bi" width="30" height="24"><use xlink:href="#hammer"/></svg></a>
+	<span class="mb-3 mb-md-0 text-body-secondary">{{ config.COPYRIGHT_MESSAGE }}</span>
       </div>
 
       <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-        <li class="ms-3"><a class="text-body-secondary" href="https://github.com/nbilbo" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#github"/></svg></a></li>
-        <li class="ms-3"><a class="text-body-secondary" href="https://www.youtube.com/@noceunaotempao" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#youtube"/></svg></a></li>
+	<li class="ms-3"><a class="text-body-secondary" href="{{ config.GITHUB_URL }}" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#github"/></svg></a></li>
+	<li class="ms-3"><a class="text-body-secondary" href="{{ config.YOUTUBE_URL }}" target="_blank"><svg class="bi" width="24" height="24"><use xlink:href="#youtube"/></svg></a></li>
       </ul>
     </footer>
   </div>
