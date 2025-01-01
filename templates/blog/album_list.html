@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ config.APP_NAME }} - Álbuns{% endblock title %}
+
+{% block content %}
+  <main class="container">
+    <div class="py-5 text-center container">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h2 class="fw-light">Álbuns</h2>
+          <p class="lead text-body-secondary">Bem-vindo(a) à seção de álbuns! Aqui você encontrará uma coleção de imagens únicas, capturando os mais variados momentos. Cada clique é uma memória para ser revivida e compartilhada.</p>
+        </div>
+      </div>
+    </div>
+
+    {% if albums|length %}
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for album in albums %}
+              <div class="col">
+                <div class="card shadow-sm">
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{ album.thumbnail }}" />
+                  <div class="card-body">
+                    <p class="card-text">{{ album.about|truncate(length=128) }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <a class="btn btn-sm btn-outline-secondary" href={{ url_for(endpoint='blog.album_detail', slug=album.slug) }}>Visitar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %} <!-- for album in albums -->
+          </div>
+        </div>
+      </div>
+    {% endif %} <!-- if albums|length -->
+
+    {% if pagination.total %}
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-sm-center mt-5">
+          <li class="page-item">
+            <a class="page-link" href={{ url_for(endpoint='blog.album_list', page=pagination.prev_num) }}>
+              Anterior
+            </a>
+          </li>
+
+          {% for number in pagination.iter_pages() %}
+            <li class="page-item {{ 'active' if pagination.page == number }}">
+              <a class="page-link" href={{ url_for(endpoint='blog.album_list', page=number) }}>
+                {{ number }}
+              </a>
+            </li>
+          {% endfor %}
+
+          <li class="page-item">
+            <a class="page-link" href={{ url_for(endpoint='blog.album_list', page=pagination.next_num) }}>
+              Próximo
+            </a>
+          </li>
+        </ul>
+      </nav>
+    {% endif %}
+  </main>
+{% endblock content %}

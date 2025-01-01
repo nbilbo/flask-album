@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <main>
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+      <div class="px-3 text-center">
+        <h1>{{ error.name }} - {{ error.code }}</h1>
+
+        <p class="lead">{{ error.description }}</p>
+
+        <p class="lead">
+          <a href={{ url_for(endpoint='blog.home') }} class="btn btn-lg btn-light fw-bold border-white bg-white">Voltar ao início</a>
+        </p>
+      </div>
+    </div>
+  </main>
+{% endblock content %}

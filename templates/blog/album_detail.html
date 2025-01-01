@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ config.APP_NAME }} - {{ album.name }}{% endblock title %}
+
+{% block content %}
+<main>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">{{ album.name }}</h1>
+        <p class="lead text-body-secondary">{{ album.about }}</p>
+      </div>
+    </div>
+  
+    {% if images %}
+      <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for image in images %}
+              <div class="col">
+                <div class="card shadow-sm">
+                  <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{ image.source }}" data-bs-toggle="modal" data-bs-target="#imageModal" data-source="{{ image.source }}" />
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          {% if pagination.total %}
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-sm-center mt-5">
+                <li class="page-item">
+                  <a class="page-link" href="{{ url_for(endpoint='blog.album_detail', slug=album.slug, page=pagination.prev_num) }}">Anterior</a>
+                </li>
+                {% for number in pagination.iter_pages() %}
+                  <li class="page-item {{ 'active' if pagination.page == number }}">
+                    <a class="page-link" href="{{ url_for(endpoint='blog.album_detail', slug=album.slug, page=number) }}">{{ number }}</a>
+                  </li>
+                {% endfor %}
+                <li class="page-item">
+                  <a class="page-link" href="{{ url_for(endpoint='blog.album_detail', slug=album.slug, page=pagination.next_num) }}">Próximo</a>
+                </li>
+              </ul>
+            </nav>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+   <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-fullscreen"> <!-- Modal ocupa toda a tela -->
+        <div class="modal-content">
+          <div class="modal-header justify-content-end">
+            <button type="button" class="btn btn-primary btn-lg" data-bs-dismiss="modal" aria-label="Close">Fechar</button>
+          </div>
+          <div class="modal-body p-0 d-flex justify-content-center align-items-center"> <!-- Centraliza o conteúdo -->
+            <img id="modalImage" class="img-fluid" src="" alt="" style="max-height: 100%; max-width: 100%;">
+          </div>
+          <div class="modal-footer bg-dark text-light d-flex justify-content-center">
+            <p id="modalDescription" class="m-0"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = imageModal.querySelector('#modalImage');
+    const modalDescription = imageModal.querySelector('#modalDescription');
+
+    function openModal(event) {
+      const source = event.target.dataset.source;
+      const description = event.target.dataset.description;
+
+      if (source) {
+        modalImage.src = source;
+        modalDescription.textContent = description || 'Sem descrição disponível.';
+      }
+    }
+
+    document.querySelectorAll('.card-img-top').forEach(element => {
+      element.addEventListener('click', openModal);
+    });
+  });
+</script>
+{% endblock content %}
+
