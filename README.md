@@ -1,6 +1,6 @@
 # Flask Album
 
-Webisite para genrenciar galerias de imagens.
+Webisite para gerenciar galerias de imagens.
 
 ## Instalação
 
